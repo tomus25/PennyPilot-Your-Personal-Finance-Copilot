@@ -1,347 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SubGuard — Track & Cancel Subscriptions + Free-Trial Reminders</title>
-  <meta name="description" content="Stop wasting money on forgotten subscriptions. Get auto reminders before free trials end, spot duplicate charges, and cancel in a click. Join the early access list." />
-  <meta name="theme-color" content="#0f172a" />
-  <!-- Open Graph -->
-  <meta property="og:title" content="SubGuard — Stop Paying for Stuff You Don’t Use" />
-  <meta property="og:description" content="Track all subscriptions in one place. Reminders before free trials end. Cancel in a click." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://dummyimage.com/1200x630/0f172a/ffffff&text=SubGuard" />
-  <meta property="og:url" content="https://your-domain.example" />
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SubGuard — Track & Cancel Subscriptions" />
-  <meta name="twitter:description" content="Stop wasting money on forgotten subscriptions. Free-trial reminders + easy cancel." />
-  <meta name="twitter:image" content="https://dummyimage.com/1200x630/0f172a/ffffff&text=SubGuard" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%230f172a'/%3E%3Cpath d='M30 55l12 12 28-28' fill='none' stroke='%23fff' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MakeYourSite.AI – Create Your Website in 1 Second</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0b1020; --ink:#e6e9f5; --muted:#b7bfda; --accent:#7c3aed;
-      --card:#111632; --line:#1b2142; --good:#22c55e; --warn:#f59e0b; --bad:#ef4444;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f9fafb; color: #111827; }
+    header { text-align: center; padding: 4rem 1rem 2rem; background: linear-gradient(135deg,#4f46e5,#3b82f6); color: white; }
+    header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+    header p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; opacity: 0.9; }
+
+    section { text-align: center; padding: 3rem 1rem; }
+    section h2 { font-size: 1.8rem; margin-bottom: 1rem; color: #111827; }
+    section p { max-width: 600px; margin: 0 auto 2rem; color: #4b5563; }
+
+    form { background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 400px; margin: 0 auto; }
+    input[type="email"], textarea {
+      width: 100%; padding: 0.75rem 1rem; border: 1px solid #d1d5db;
+      border-radius: 0.5rem; margin-bottom: 1rem; font-size: 1rem;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--ink); background:radial-gradient(1200px 600px at 85% -10%, rgba(124,58,237,.22), transparent 60%),
-               radial-gradient(1000px 700px at -10% 10%, rgba(37,99,235,.18), transparent 60%), var(--bg);
-      line-height:1.6;
+    button {
+      background: #3b82f6; color: white; border: none; padding: 0.75rem 1rem;
+      width: 100%; border-radius: 0.5rem; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: background 0.3s;
     }
-    a{color:#a78bfa;text-decoration:none}
-    a:hover{text-decoration:underline}
-    .wrap{max-width:1120px; margin:0 auto; padding:24px}
-    .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
-    .logo{display:flex; gap:10px; align-items:center; font-weight:800; letter-spacing:.2px}
-    .logo-badge{width:34px; height:34px; display:grid; place-items:center; border-radius:11px; background:linear-gradient(135deg,#7c3aed,#2563eb)}
-    .logo svg{width:18px; height:18px}
-    .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:12px 18px; border-radius:14px; border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); color:var(--ink); font-weight:700; cursor:pointer}
-    .btn:hover{border-color:#2a3366; transform:translateY(-1px)}
-    .btn.primary{background:linear-gradient(135deg,#7c3aed,#2563eb); border-color:transparent; box-shadow:0 10px 30px rgba(124,58,237,.3)}
-    .grid{display:grid; gap:24px}
-    .hero{padding:56px 0 24px}
-    .hero h1{font-size: clamp(30px, 5vw, 58px); line-height:1.05; margin:16px 0 10px; letter-spacing:-.02em}
-    .sub{color:var(--muted); font-size: clamp(16px, 2.2vw, 20px)}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid var(--line); border-radius:20px; padding:20px}
-    .badge{display:inline-flex; gap:8px; align-items:center; font-size:12px; color:#dbeafe; background:rgba(59,130,246,.12);
-      border:1px solid rgba(59,130,246,.25); padding:6px 10px; border-radius:999px}
-    .hero-cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:18px}
-    .kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:22px}
-    .kpi{background:linear-gradient(180deg, rgba(124,58,237,.08), rgba(124,58,237,.02)); border:1px dashed #2b2f55; padding:16px; border-radius:16px}
-    .kpi b{font-size:24px; display:block}
-    .section{padding:40px 0}
-    .section h2{font-size: clamp(24px, 3.4vw, 36px); margin:0 0 16px}
-    .list{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
-    .list .item{padding:18px; border:1px solid var(--line); border-radius:18px; background:var(--card)}
-    .item h3{margin:6px 0 8px; font-size:18px}
-    .pill{font-size:12px; color:#a7b0d6; padding:4px 10px; border:1px solid #263066; border-radius:999px; display:inline-block}
-    .features{display:grid; grid-template-columns:2fr 1.2fr; gap:24px}
-    .mock{border:1px solid var(--line); border-radius:18px; overflow:hidden; background:linear-gradient(180deg,#0d1328,#0a1022)}
-    .mock-top{display:flex; gap:8px; padding:12px 14px; background:#0e1531; border-bottom:1px solid #1b2142}
-    .dot{width:10px; height:10px; border-radius:50%; background:#2a3366}
-    .mock-body{padding:18px}
-    .row{display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px dashed #223}
-    .row:last-child{border-bottom:none}
-    .row .label{color:#b8c2e0}
-    .row .val{font-weight:800}
-    .cta{display:grid; grid-template-columns:2fr 1.3fr; gap:24px; align-items:center}
-    .form{padding:18px; border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}
-    label{font-size:14px; color:#cbd5e1; display:block; margin:12px 0 6px}
-    input, select{width:100%; padding:14px 14px; border-radius:12px; border:1px solid #2a3366; background:#0b1126; color:var(--ink); outline:none}
-    input:focus, select:focus{border-color:#3b82f6}
-    .disclaimer{color:#97a0c4; font-size:12px}
-    .logos{display:flex; gap:16px; flex-wrap:wrap; align-items:center}
-    .logos span{opacity:.6; font-size:12px; border:1px dashed #2b315e; padding:8px 10px; border-radius:999px}
-    .faq{display:grid; grid-template-columns:1fr 1fr; gap:16px}
-    .q{padding:16px; border:1px solid var(--line); border-radius:16px; background:var(--card)}
-    footer{padding:30px 0; color:#93a0c7; font-size:13px; border-top:1px solid var(--line); margin-top:30px}
-    .tiny{font-size:12px; color:#94a3b8}
-    .label-flag{display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border:1px solid #2a3366; border-radius:999px; font-size:12px}
-    .price-chip{display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:999px; background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.3); color:#bbf7d0; font-weight:700}
-    .notice{display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border:1px dashed #2b315e; border-radius:12px; background:rgba(124,58,237,.08); color:#dcd7fe}
-    @media (max-width: 980px){
-      .list{grid-template-columns:1fr}
-      .features{grid-template-columns:1fr}
-      .cta{grid-template-columns:1fr}
-      .kpis{grid-template-columns:1fr; gap:12px}
+    button:hover { background: #2563eb; }
+
+    footer { text-align: center; padding: 2rem 1rem; font-size: 0.9rem; color: #6b7280; }
+    @media (max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      section h2 { font-size: 1.5rem; }
     }
   </style>
-
-  <!-- Facebook Pixel (replace YOUR_PIXEL_ID) -->
-  <script>
-    // Pixel placeholder; uncomment and replace when ready.
-    // !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    // n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-    // n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-    // t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script',
-    // 'https://connect.facebook.net/en_US/fbevents.js');
-    // fbq('init', 'YOUR_PIXEL_ID');
-    // fbq('track', 'PageView');
-  </script>
-  <noscript><!-- Pixel noscript would go here --></noscript>
 </head>
 <body>
-  <div class="wrap">
-    <!-- NAV -->
-    <nav class="nav">
-      <div class="logo">
-        <div class="logo-badge" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-            <path d="M4 12a8 8 0 1016 0 8 8 0 10-16 0Z"/>
-            <path d="M7 13l3 3 7-7" />
-          </svg>
-        </div>
-        <span>SubGuard</span>
-      </div>
-      <div class="logos">
-        <span>Free-trial alerts</span>
-        <span>1-click cancel*</span>
-        <span>Duplicate charge finder</span>
-      </div>
-    </nav>
 
-    <!-- HERO -->
-    <header class="hero">
-      <span class="badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M1 12h22"/></svg>
-        Early Access — Launching Soon
-      </span>
-      <h1>Stop paying for stuff you don’t use.</h1>
-      <p class="sub">SubGuard tracks all your subscriptions, warns you <b>before free trials renew</b>, spots duplicate charges, and helps you cancel in a click.</p>
-      <div class="hero-cta">
-        <a href="#waitlist" class="btn primary">Join the Waitlist</a>
-        <a href="#how" class="btn">How it works</a>
-      </div>
+  <header>
+    <h1>MakeYourSite.AI</h1>
+    <p>Create your website in <strong>1 second</strong> – just describe what you want.</p>
+  </header>
 
-      <div class="kpis">
-        <div class="kpi"><b>+$720</b><span class="tiny">Avg. yearly savings our beta users target</span></div>
-        <div class="kpi"><b>&lt;2 min</b><span class="tiny">Connect email or bank preview in minutes</span></div>
-        <div class="kpi"><b>100% control</b><span class="tiny">You approve every action, always</span></div>
-      </div>
-    </header>
+  <section>
+    <h2>Get Early Access</h2>
+    <p>Describe your idea below and leave your email. Be the first to use AI that builds websites instantly.</p>
+    <form action="https://formspree.io/f/xanljgqe" method="POST">
+      <textarea name="description" placeholder="Example: I need a landing page for my yoga studio" required></textarea>
+      <input type="email" name="email" placeholder="Your email" required />
+      <button type="submit">Join the Waitlist</button>
+    </form>
+  </section>
 
-    <!-- SOCIAL PROOF / NOTICE -->
-    <div class="notice">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
-      <div>
-        <b>What you’ll get first:</b> email-scan prototype for trial reminders + a simple dashboard. Cancel-in-a-click rolls out next. Be an early user and shape the roadmap.
-      </div>
-    </div>
+  <section>
+    <h2>Why People Love It</h2>
+    <p>Stop paying developers. Stop wasting weeks. Get your website instantly and start growing your business today.</p>
+  </section>
 
-    <!-- HOW IT WORKS -->
-    <section id="how" class="section features">
-      <div>
-        <h2>How it works</h2>
-        <div class="list">
-          <div class="item">
-            <span class="pill">Step 1</span>
-            <h3>Connect safely</h3>
-            <p>Link your email (Gmail/Outlook) to detect subscriptions & trials. Read-only. No inbox changes.</p>
-          </div>
-          <div class="item">
-            <span class="pill">Step 2</span>
-            <h3>Get ahead of renewals</h3>
-            <p>Smart reminders before trials end and before monthly or annual renewals hit your card.</p>
-          </div>
-          <div class="item">
-            <span class="pill">Step 3</span>
-            <h3>Cancel in a click*</h3>
-            <p>Use pre-built flows to cancel fast. For tricky vendors, we handle the back-and-forth for you.*</p>
-          </div>
-        </div>
-        <p class="tiny">*Some cancellations may require additional verification or manual steps with the provider.</p>
-      </div>
+  <footer>
+    <p>© 2025 MakeYourSite.AI – Build smarter. Build faster.</p>
+  </footer>
 
-      <!-- Mocked UI Preview -->
-      <div class="mock">
-        <div class="mock-top">
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-          <span style="margin-left:8px; color:#a3b1e8; font-size:12px">SubGuard — Preview</span>
-        </div>
-        <div class="mock-body">
-          <div class="row">
-            <div class="label">Next free-trial ends</div>
-            <div class="val" style="color:var(--warn)">in 3 days · Paramount+</div>
-          </div>
-          <div class="row">
-            <div class="label">Duplicate charges</div>
-            <div class="val" style="color:var(--bad)">2 flagged · Spotify Family</div>
-          </div>
-          <div class="row">
-            <div class="label">Upcoming renewals</div>
-            <div class="val" style="color:var(--good)">4 this month</div>
-          </div>
-          <div class="row">
-            <div class="label">Potential savings</div>
-            <div class="val">$41.60/mo</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- VALUE PROPS -->
-    <section class="section">
-      <h2>Designed to save you money — every month</h2>
-      <div class="list">
-        <div class="item">
-          <h3>Free-trial alarms</h3>
-          <p>Get notified before a trial converts. One tap to cancel or to snooze if you’re still testing.</p>
-        </div>
-        <div class="item">
-          <h3>Subscription map</h3>
-          <p>Everything you pay for—streaming, cloud, apps, gyms—cleanly organized by price, category, and renewal date.</p>
-        </div>
-        <div class="item">
-          <h3>Duplicate & price-hike alerts</h3>
-          <p>We flag overlap (like two music services) and quiet price bumps before they drain your wallet.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- PRICING TEASER -->
-    <section class="section">
-      <h2>Simple subscription</h2>
-      <p class="price-chip">$5.99/month after free trial</p>
-      <p class="tiny">Found money guarantee: if SubGuard doesn’t help you save at least what you pay in the first 60 days, we’ll comp a month.</p>
-    </section>
-
-    <!-- WAITLIST / FORM -->
-    <section id="waitlist" class="section cta">
-      <div>
-        <h2>Be first. Save first.</h2>
-        <p>Join the early access list and get launch perks: extended trial, priority support, and grandfathered pricing.</p>
-        <ul>
-          <li>✅ Fits Facebook Ads: clear pain point & broad audience</li>
-          <li>✅ MVP in 10–15 days (email scan + reminders)</li>
-          <li>✅ Fully digital, subscription-based</li>
-        </ul>
-      </div>
-
-      <form class="form" action="https://formspree.io/f/xanljgqe" method="POST">
-        <input type="hidden" name="_subject" value="SubGuard Early Access Request" />
-        <input type="hidden" name="_email.template" value="table" />
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-        <input type="hidden" id="utm_source" name="utm_source" />
-        <input type="hidden" id="utm_medium" name="utm_medium" />
-        <input type="hidden" id="utm_campaign" name="utm_campaign" />
-        <input type="hidden" id="utm_content" name="utm_content" />
-        <input type="hidden" id="utm_term" name="utm_term" />
-        <input type="hidden" id="fbclid" name="fbclid" />
-        <input type="hidden" id="gclid" name="gclid" />
-
-        <label for="email">Work or personal email</label>
-        <input id="email" name="email" type="email" required placeholder="you@example.com" />
-
-        <label for="zip">ZIP (for release rollout)</label>
-        <input id="zip" name="zip" type="text" pattern="\\d{5}(-\\d{4})?" inputmode="numeric" placeholder="e.g., 10001" />
-
-        <label for="biggestPain">Biggest subscription pain</label>
-        <select id="biggestPain" name="biggestPain" required>
-          <option value="">Choose one…</option>
-          <option value="free-trial">Forgetting free trials</option>
-          <option value="duplicates">Paying for duplicates</option>
-          <option value="price-hike">Price hikes without notice</option>
-          <option value="hard-to-cancel">Hard-to-cancel services</option>
-          <option value="just-curious">Just curious</option>
-        </select>
-
-        <label for="consent" style="display:flex; gap:10px; align-items:flex-start">
-          <input id="consent" name="consent" type="checkbox" required style="width:auto" />
-          <span class="tiny">I agree to receive early-access emails and product updates. I can unsubscribe anytime.</span>
-        </label>
-
-        <button class="btn primary" type="submit" style="width:100%; margin-top:10px">Join Early Access</button>
-        <p id="form-status" class="tiny" style="margin-top:8px"></p>
-        <p class="disclaimer" style="margin-top:10px">
-          We respect your privacy. Read-only access for detection; you’re always in control.
-        </p>
-      </form>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section">
-      <h2>FAQ</h2>
-      <div class="faq">
-        <div class="q">
-          <strong>Is this safe?</strong>
-          <p>We use secure OAuth for email connections with read-only scopes to detect subscriptions. You’re always in control and can disconnect anytime.</p>
-        </div>
-        <div class="q">
-          <strong>What will be ready first?</strong>
-          <p>Trial & renewal reminders + dashboard. Then quick-cancel flows and duplicate-charge detection.</p>
-        </div>
-        <div class="q">
-          <strong>When does billing start?</strong>
-          <p>At public launch after a free trial. Early users get extended trials and locked pricing.</p>
-        </div>
-        <div class="q">
-          <strong>Which emails are supported?</strong>
-          <p>Gmail and Outlook at launch. Others based on demand.</p>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div class="grid" style="grid-template-columns:2fr 1fr; gap:16px">
-        <div>
-          <div class="label-flag">Made for the U.S. • USD pricing</div>
-          <p class="tiny">© <span id="year"></span> SubGuard. All rights reserved.</p>
-        </div>
-        <div style="text-align:right">
-          <a href="#" class="tiny">Privacy</a> · <a href="#" class="tiny">Terms</a> · <a href="#waitlist" class="tiny">Join</a>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Minimal JS: capture UTM/IDs, enhance form UX -->
-  <script>
-    (function(){
-      // Year
-      document.getElementById('year').textContent = new Date().getFullYear();
-
-      // UTM + click IDs
-      const params = new URLSearchParams(window.location.search);
-      const idMap = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
-      idMap.forEach(k => {
-        const el = document.getElementById(k);
-        if (el && params.get(k)) el.value = params.get(k);
-      });
-
-      // Friendly form status without blocking Formspree
-      const form = document.querySelector('form[action^="https://formspree.io"]');
-      const status = document.getElementById('form-status');
-      if (form){
-        form.addEventListener('submit', function(){
-          status.textContent = 'Submitting…';
-          setTimeout(()=>{ status.textContent = 'Thanks! If this tab stays open, you’ll see a confirmation shortly.'; }, 1200);
-        });
-      }
-    })();
-  </script>
 </body>
 </html>

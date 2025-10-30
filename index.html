@@ -1,331 +1,347 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PennyPilot – Your Personal Finance Copilot</title>
-  <meta name="description" content="PennyPilot is a simple personal finance copilot that auto‑categorizes your bank CSVs, spots recurring subscriptions, and sends bill & renewal alerts. Join the waitlist." />
-  <link rel="icon" href="/favicon.ico" />
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui','Segoe UI','Roboto','Helvetica Neue','Arial'] }
-        }
-      }
+  <title>SubGuard — Track & Cancel Subscriptions + Free-Trial Reminders</title>
+  <meta name="description" content="Stop wasting money on forgotten subscriptions. Get auto reminders before free trials end, spot duplicate charges, and cancel in a click. Join the early access list." />
+  <meta name="theme-color" content="#0f172a" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="SubGuard — Stop Paying for Stuff You Don’t Use" />
+  <meta property="og:description" content="Track all subscriptions in one place. Reminders before free trials end. Cancel in a click." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://dummyimage.com/1200x630/0f172a/ffffff&text=SubGuard" />
+  <meta property="og:url" content="https://your-domain.example" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SubGuard — Track & Cancel Subscriptions" />
+  <meta name="twitter:description" content="Stop wasting money on forgotten subscriptions. Free-trial reminders + easy cancel." />
+  <meta name="twitter:image" content="https://dummyimage.com/1200x630/0f172a/ffffff&text=SubGuard" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%230f172a'/%3E%3Cpath d='M30 55l12 12 28-28' fill='none' stroke='%23fff' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <style>
+    :root{
+      --bg:#0b1020; --ink:#e6e9f5; --muted:#b7bfda; --accent:#7c3aed;
+      --card:#111632; --line:#1b2142; --good:#22c55e; --warn:#f59e0b; --bad:#ef4444;
     }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink); background:radial-gradient(1200px 600px at 85% -10%, rgba(124,58,237,.22), transparent 60%),
+               radial-gradient(1000px 700px at -10% 10%, rgba(37,99,235,.18), transparent 60%), var(--bg);
+      line-height:1.6;
+    }
+    a{color:#a78bfa;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1120px; margin:0 auto; padding:24px}
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
+    .logo{display:flex; gap:10px; align-items:center; font-weight:800; letter-spacing:.2px}
+    .logo-badge{width:34px; height:34px; display:grid; place-items:center; border-radius:11px; background:linear-gradient(135deg,#7c3aed,#2563eb)}
+    .logo svg{width:18px; height:18px}
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:12px 18px; border-radius:14px; border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); color:var(--ink); font-weight:700; cursor:pointer}
+    .btn:hover{border-color:#2a3366; transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(135deg,#7c3aed,#2563eb); border-color:transparent; box-shadow:0 10px 30px rgba(124,58,237,.3)}
+    .grid{display:grid; gap:24px}
+    .hero{padding:56px 0 24px}
+    .hero h1{font-size: clamp(30px, 5vw, 58px); line-height:1.05; margin:16px 0 10px; letter-spacing:-.02em}
+    .sub{color:var(--muted); font-size: clamp(16px, 2.2vw, 20px)}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid var(--line); border-radius:20px; padding:20px}
+    .badge{display:inline-flex; gap:8px; align-items:center; font-size:12px; color:#dbeafe; background:rgba(59,130,246,.12);
+      border:1px solid rgba(59,130,246,.25); padding:6px 10px; border-radius:999px}
+    .hero-cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:18px}
+    .kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:22px}
+    .kpi{background:linear-gradient(180deg, rgba(124,58,237,.08), rgba(124,58,237,.02)); border:1px dashed #2b2f55; padding:16px; border-radius:16px}
+    .kpi b{font-size:24px; display:block}
+    .section{padding:40px 0}
+    .section h2{font-size: clamp(24px, 3.4vw, 36px); margin:0 0 16px}
+    .list{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+    .list .item{padding:18px; border:1px solid var(--line); border-radius:18px; background:var(--card)}
+    .item h3{margin:6px 0 8px; font-size:18px}
+    .pill{font-size:12px; color:#a7b0d6; padding:4px 10px; border:1px solid #263066; border-radius:999px; display:inline-block}
+    .features{display:grid; grid-template-columns:2fr 1.2fr; gap:24px}
+    .mock{border:1px solid var(--line); border-radius:18px; overflow:hidden; background:linear-gradient(180deg,#0d1328,#0a1022)}
+    .mock-top{display:flex; gap:8px; padding:12px 14px; background:#0e1531; border-bottom:1px solid #1b2142}
+    .dot{width:10px; height:10px; border-radius:50%; background:#2a3366}
+    .mock-body{padding:18px}
+    .row{display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px dashed #223}
+    .row:last-child{border-bottom:none}
+    .row .label{color:#b8c2e0}
+    .row .val{font-weight:800}
+    .cta{display:grid; grid-template-columns:2fr 1.3fr; gap:24px; align-items:center}
+    .form{padding:18px; border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}
+    label{font-size:14px; color:#cbd5e1; display:block; margin:12px 0 6px}
+    input, select{width:100%; padding:14px 14px; border-radius:12px; border:1px solid #2a3366; background:#0b1126; color:var(--ink); outline:none}
+    input:focus, select:focus{border-color:#3b82f6}
+    .disclaimer{color:#97a0c4; font-size:12px}
+    .logos{display:flex; gap:16px; flex-wrap:wrap; align-items:center}
+    .logos span{opacity:.6; font-size:12px; border:1px dashed #2b315e; padding:8px 10px; border-radius:999px}
+    .faq{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+    .q{padding:16px; border:1px solid var(--line); border-radius:16px; background:var(--card)}
+    footer{padding:30px 0; color:#93a0c7; font-size:13px; border-top:1px solid var(--line); margin-top:30px}
+    .tiny{font-size:12px; color:#94a3b8}
+    .label-flag{display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border:1px solid #2a3366; border-radius:999px; font-size:12px}
+    .price-chip{display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:999px; background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.3); color:#bbf7d0; font-weight:700}
+    .notice{display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border:1px dashed #2b315e; border-radius:12px; background:rgba(124,58,237,.08); color:#dcd7fe}
+    @media (max-width: 980px){
+      .list{grid-template-columns:1fr}
+      .features{grid-template-columns:1fr}
+      .cta{grid-template-columns:1fr}
+      .kpis{grid-template-columns:1fr; gap:12px}
+    }
+  </style>
 
-  <!-- Facebook Pixel (optional) -->
+  <!-- Facebook Pixel (replace YOUR_PIXEL_ID) -->
   <script>
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    // fbq('init', 'PIXEL_ID'); // <- set your pixel id if you use Ads
+    // Pixel placeholder; uncomment and replace when ready.
+    // !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    // n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    // n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    // t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script',
+    // 'https://connect.facebook.net/en_US/fbevents.js');
+    // fbq('init', 'YOUR_PIXEL_ID');
     // fbq('track', 'PageView');
   </script>
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1"/></noscript>
-
-  <style>
-    .bg-grid { background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 24px 24px; }
-  </style>
+  <noscript><!-- Pixel noscript would go here --></noscript>
 </head>
-<body class="bg-slate-950 text-white font-sans">
-  <!-- Top bar -->
-  <div class="w-full bg-gradient-to-r from-emerald-500/10 via-cyan-400/10 to-indigo-500/10 border-b border-white/10 text-center text-sm py-2">
-    ✨ Early‑bird founders plan: first 1,000 users lock in <span class="font-semibold">$6.99/month</span> for life.
-  </div>
-
-  <!-- Header / Hero -->
-  <header class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/10 via-cyan-500/10 to-transparent"></div>
-    <div class="absolute inset-0 bg-grid opacity-40"></div>
-
-    <nav class="relative z-10 max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-slate-900"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zm1 9.5V7.75a.75.75 0 10-1.5 0v5.06l3.22 3.22a.75.75 0 101.06-1.06L13 12.5z"/></svg>
+<body>
+  <div class="wrap">
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="logo">
+        <div class="logo-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path d="M4 12a8 8 0 1016 0 8 8 0 10-16 0Z"/>
+            <path d="M7 13l3 3 7-7" />
+          </svg>
         </div>
-        <span class="text-xl font-extrabold tracking-tight">PennyPilot</span>
+        <span>SubGuard</span>
       </div>
-      <div class="hidden md:flex items-center gap-8 text-sm text-white/80">
-        <a href="#how" class="hover:text-white">How it works</a>
-        <a href="#for" class="hover:text-white">Who it’s for</a>
-        <a href="#faq" class="hover:text-white">FAQ</a>
-        <a href="#join" class="px-4 py-2 rounded-xl bg-white text-slate-900 font-semibold hover:opacity-90">Join</a>
+      <div class="logos">
+        <span>Free-trial alerts</span>
+        <span>1-click cancel*</span>
+        <span>Duplicate charge finder</span>
       </div>
     </nav>
 
-    <section class="relative z-10 max-w-7xl mx-auto px-6 pb-24 pt-6 md:pt-10">
-      <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">Your personal finance <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-400">copilot</span> in minutes.</h1>
-          <p class="mt-5 text-lg text-white/80 max-w-xl">Upload your bank CSVs. PennyPilot instantly categorizes spending, spots recurring subscriptions, and reminds you of upcoming bills & renewals. Clear insights—no bank login required.</p>
+    <!-- HERO -->
+    <header class="hero">
+      <span class="badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M1 12h22"/></svg>
+        Early Access — Launching Soon
+      </span>
+      <h1>Stop paying for stuff you don’t use.</h1>
+      <p class="sub">SubGuard tracks all your subscriptions, warns you <b>before free trials renew</b>, spots duplicate charges, and helps you cancel in a click.</p>
+      <div class="hero-cta">
+        <a href="#waitlist" class="btn primary">Join the Waitlist</a>
+        <a href="#how" class="btn">How it works</a>
+      </div>
 
-          <!-- WAITLIST FORM (Formspree) -->
-          <form id="waitlist" action="https://formspree.io/f/xanljgqe" method="POST" class="mt-6 flex flex-col sm:flex-row gap-3" accept-charset="UTF-8">
-            <input type="email" name="email" id="email" placeholder="Enter your email" required class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400/60 placeholder-white/50">
-            <label class="flex items-start gap-2 text-xs text-white/70"><input type="checkbox" name="consent" id="consent1" class="mt-1" required> I agree to receive early-access emails and updates.</label>
-            <button id="joinBtn" class="px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-900 font-bold shadow-lg shadow-emerald-500/20 hover:opacity-95">Join the waitlist</button>
-          </form>
-          <p id="formMessage" class="mt-3 text-sm text-white/70 hidden"></p>
+      <div class="kpis">
+        <div class="kpi"><b>+$720</b><span class="tiny">Avg. yearly savings our beta users target</span></div>
+        <div class="kpi"><b>&lt;2 min</b><span class="tiny">Connect email or bank preview in minutes</span></div>
+        <div class="kpi"><b>100% control</b><span class="tiny">You approve every action, always</span></div>
+      </div>
+    </header>
 
-          <div class="mt-6 flex items-center gap-4 text-white/60 text-sm">
-            <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Private: local CSV processing</div>
-            <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-cyan-400"></span> Detects subscriptions</div>
-            <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-indigo-400"></span> Email reminders</div>
+    <!-- SOCIAL PROOF / NOTICE -->
+    <div class="notice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+      <div>
+        <b>What you’ll get first:</b> email-scan prototype for trial reminders + a simple dashboard. Cancel-in-a-click rolls out next. Be an early user and shape the roadmap.
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="section features">
+      <div>
+        <h2>How it works</h2>
+        <div class="list">
+          <div class="item">
+            <span class="pill">Step 1</span>
+            <h3>Connect safely</h3>
+            <p>Link your email (Gmail/Outlook) to detect subscriptions & trials. Read-only. No inbox changes.</p>
+          </div>
+          <div class="item">
+            <span class="pill">Step 2</span>
+            <h3>Get ahead of renewals</h3>
+            <p>Smart reminders before trials end and before monthly or annual renewals hit your card.</p>
+          </div>
+          <div class="item">
+            <span class="pill">Step 3</span>
+            <h3>Cancel in a click*</h3>
+            <p>Use pre-built flows to cancel fast. For tricky vendors, we handle the back-and-forth for you.*</p>
           </div>
         </div>
+        <p class="tiny">*Some cancellations may require additional verification or manual steps with the provider.</p>
+      </div>
 
-        <!-- Mock dashboard card -->
-        <div class="relative">
-          <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-emerald-400/30 via-cyan-400/30 to-indigo-400/30 blur-xl opacity-60"></div>
-          <div class="relative rounded-2xl bg-white/5 border border-white/10 p-5 md:p-6 shadow-2xl backdrop-blur">
-            <div class="flex items-center justify-between">
-              <h3 class="font-bold">Spending Overview</h3>
-              <span class="text-xs text-white/60">Instant after upload</span>
-            </div>
-            <div class="grid grid-cols-3 gap-3 mt-4">
-              <div class="rounded-xl bg-white/5 border border-white/10 p-4">
-                <div class="text-xs text-white/60">This month</div>
-                <div class="text-2xl font-extrabold mt-1">$2,134</div>
-              </div>
-              <div class="rounded-xl bg-white/5 border border-white/10 p-4">
-                <div class="text-xs text-white/60">Subscriptions</div>
-                <div class="text-2xl font-extrabold mt-1">$86</div>
-              </div>
-              <div class="rounded-xl bg-white/5 border border-white/10 p-4">
-                <div class="text-xs text-white/60">Upcoming bills</div>
-                <div class="text-2xl font-extrabold mt-1">$312</div>
-              </div>
-            </div>
-            <div class="mt-5 rounded-xl border border-white/10">
-              <div class="flex items-center justify-between px-4 py-2 border-b border-white/10 text-white/60 text-xs">
-                <span>Likely recurring charges</span><span>Est. monthly</span>
-              </div>
-              <div class="divide-y divide-white/10">
-                <div class="flex items-center justify-between px-4 py-3">
-                  <div class="flex items-center gap-3">
-                    <div class="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center">S</div>
-                    <div>
-                      <div class="text-sm font-semibold">Spotify</div>
-                      <div class="text-xs text-white/60">Entertainment</div>
-                    </div>
-                  </div>
-                  <div class="text-sm font-bold">$10.99</div>
-                </div>
-                <div class="flex items-center justify-between px-4 py-3">
-                  <div class="flex items-center gap-3">
-                    <div class="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center">A</div>
-                    <div>
-                      <div class="text-sm font-semibold">Adobe</div>
-                      <div class="text-xs text-white/60">Work</div>
-                    </div>
-                  </div>
-                  <div class="text-sm font-bold">$22.99</div>
-                </div>
-                <div class="flex items-center justify-between px-4 py-3">
-                  <div class="flex items-center gap-3">
-                    <div class="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center">P</div>
-                    <div>
-                      <div class="text-sm font-semibold">Phone Bill</div>
-                      <div class="text-xs text-white/60">Utilities</div>
-                    </div>
-                  </div>
-                  <div class="text-sm font-bold">$49.00</div>
-                </div>
-              </div>
-            </div>
-            <div class="mt-4 text-xs text-white/50">*Mock data for illustration</div>
+      <!-- Mocked UI Preview -->
+      <div class="mock">
+        <div class="mock-top">
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+          <span style="margin-left:8px; color:#a3b1e8; font-size:12px">SubGuard — Preview</span>
+        </div>
+        <div class="mock-body">
+          <div class="row">
+            <div class="label">Next free-trial ends</div>
+            <div class="val" style="color:var(--warn)">in 3 days · Paramount+</div>
+          </div>
+          <div class="row">
+            <div class="label">Duplicate charges</div>
+            <div class="val" style="color:var(--bad)">2 flagged · Spotify Family</div>
+          </div>
+          <div class="row">
+            <div class="label">Upcoming renewals</div>
+            <div class="val" style="color:var(--good)">4 this month</div>
+          </div>
+          <div class="row">
+            <div class="label">Potential savings</div>
+            <div class="val">$41.60/mo</div>
           </div>
         </div>
       </div>
     </section>
-  </header>
 
-  <!-- Social proof / badges -->
-  <section class="max-w-7xl mx-auto px-6 -mt-10 md:-mt-16">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <div class="rounded-xl border border-white/10 bg-white/5 p-4 text-center text-white/70">No bank login required</div>
-      <div class="rounded-xl border border-white/10 bg-white/5 p-4 text-center text-white/70">Export PDF reports</div>
-      <div class="rounded-xl border border-white/10 bg-white/5 p-4 text-center text-white/70">Email reminders</div>
-      <div class="rounded-xl border border-white/10 bg-white/5 p-4 text-center text-white/70">Private by design</div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section id="how" class="max-w-7xl mx-auto px-6 py-20">
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="md:col-span-1">
-        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">How it works</h2>
-        <p class="mt-3 text-white/80">A focused flow that delivers clear value on day one.</p>
-      </div>
-      <div class="md:col-span-2 grid sm:grid-cols-3 gap-6">
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-          <div class="text-sm text-white/60">Step 1</div>
-          <h3 class="font-bold mt-1">Upload CSVs</h3>
-          <p class="text-white/70 text-sm mt-2">Export transactions from your bank or card and drop them in. No account connection needed.</p>
+    <!-- VALUE PROPS -->
+    <section class="section">
+      <h2>Designed to save you money — every month</h2>
+      <div class="list">
+        <div class="item">
+          <h3>Free-trial alarms</h3>
+          <p>Get notified before a trial converts. One tap to cancel or to snooze if you’re still testing.</p>
         </div>
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-          <div class="text-sm text-white/60">Step 2</div>
-          <h3 class="font-bold mt-1">Auto‑categorize</h3>
-          <p class="text-white/70 text-sm mt-2">Our model maps merchants & categories, flags likely subscriptions and recurring charges.</p>
+        <div class="item">
+          <h3>Subscription map</h3>
+          <p>Everything you pay for—streaming, cloud, apps, gyms—cleanly organized by price, category, and renewal date.</p>
         </div>
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-          <div class="text-sm text-white/60">Step 3</div>
-          <h3 class="font-bold mt-1">Get alerts</h3>
-          <p class="text-white/70 text-sm mt-2">Email reminders for upcoming bills & renewals so you never miss or overpay again.</p>
+        <div class="item">
+          <h3>Duplicate & price-hike alerts</h3>
+          <p>We flag overlap (like two music services) and quiet price bumps before they drain your wallet.</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Who it's for -->
-  <section id="for" class="max-w-7xl mx-auto px-6 pb-20">
-    <div class="rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 md:p-10">
-      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Built for real life</h2>
-      <div class="grid md:grid-cols-3 gap-6 mt-6">
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-          <h3 class="font-bold">Busy professionals</h3>
-          <p class="text-white/70 text-sm mt-2">Keep tabs on spending, tax‑deductible items, and software subscriptions.</p>
+    <!-- PRICING TEASER -->
+    <section class="section">
+      <h2>Simple subscription</h2>
+      <p class="price-chip">$5.99/month after free trial</p>
+      <p class="tiny">Found money guarantee: if SubGuard doesn’t help you save at least what you pay in the first 60 days, we’ll comp a month.</p>
+    </section>
+
+    <!-- WAITLIST / FORM -->
+    <section id="waitlist" class="section cta">
+      <div>
+        <h2>Be first. Save first.</h2>
+        <p>Join the early access list and get launch perks: extended trial, priority support, and grandfathered pricing.</p>
+        <ul>
+          <li>✅ Fits Facebook Ads: clear pain point & broad audience</li>
+          <li>✅ MVP in 10–15 days (email scan + reminders)</li>
+          <li>✅ Fully digital, subscription-based</li>
+        </ul>
+      </div>
+
+      <form class="form" action="https://formspree.io/f/xanljgqe" method="POST">
+        <input type="hidden" name="_subject" value="SubGuard Early Access Request" />
+        <input type="hidden" name="_email.template" value="table" />
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <input type="hidden" id="utm_source" name="utm_source" />
+        <input type="hidden" id="utm_medium" name="utm_medium" />
+        <input type="hidden" id="utm_campaign" name="utm_campaign" />
+        <input type="hidden" id="utm_content" name="utm_content" />
+        <input type="hidden" id="utm_term" name="utm_term" />
+        <input type="hidden" id="fbclid" name="fbclid" />
+        <input type="hidden" id="gclid" name="gclid" />
+
+        <label for="email">Work or personal email</label>
+        <input id="email" name="email" type="email" required placeholder="you@example.com" />
+
+        <label for="zip">ZIP (for release rollout)</label>
+        <input id="zip" name="zip" type="text" pattern="\\d{5}(-\\d{4})?" inputmode="numeric" placeholder="e.g., 10001" />
+
+        <label for="biggestPain">Biggest subscription pain</label>
+        <select id="biggestPain" name="biggestPain" required>
+          <option value="">Choose one…</option>
+          <option value="free-trial">Forgetting free trials</option>
+          <option value="duplicates">Paying for duplicates</option>
+          <option value="price-hike">Price hikes without notice</option>
+          <option value="hard-to-cancel">Hard-to-cancel services</option>
+          <option value="just-curious">Just curious</option>
+        </select>
+
+        <label for="consent" style="display:flex; gap:10px; align-items:flex-start">
+          <input id="consent" name="consent" type="checkbox" required style="width:auto" />
+          <span class="tiny">I agree to receive early-access emails and product updates. I can unsubscribe anytime.</span>
+        </label>
+
+        <button class="btn primary" type="submit" style="width:100%; margin-top:10px">Join Early Access</button>
+        <p id="form-status" class="tiny" style="margin-top:8px"></p>
+        <p class="disclaimer" style="margin-top:10px">
+          We respect your privacy. Read-only access for detection; you’re always in control.
+        </p>
+      </form>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <h2>FAQ</h2>
+      <div class="faq">
+        <div class="q">
+          <strong>Is this safe?</strong>
+          <p>We use secure OAuth for email connections with read-only scopes to detect subscriptions. You’re always in control and can disconnect anytime.</p>
         </div>
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-          <h3 class="font-bold">Families</h3>
-          <p class="text-white/70 text-sm mt-2">See recurring charges across accounts, plan for bills, and avoid late fees.</p>
+        <div class="q">
+          <strong>What will be ready first?</strong>
+          <p>Trial & renewal reminders + dashboard. Then quick-cancel flows and duplicate-charge detection.</p>
         </div>
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-          <h3 class="font-bold">Students & creators</h3>
-          <p class="text-white/70 text-sm mt-2">Track small purchases and subscriptions that add up fast.</p>
+        <div class="q">
+          <strong>When does billing start?</strong>
+          <p>At public launch after a free trial. Early users get extended trials and locked pricing.</p>
+        </div>
+        <div class="q">
+          <strong>Which emails are supported?</strong>
+          <p>Gmail and Outlook at launch. Others based on demand.</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Pricing teaser & CTA -->
-  <section class="max-w-7xl mx-auto px-6 pb-20">
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="md:col-span-2">
-        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Simple subscription</h2>
-        <p class="mt-3 text-white/80">Monthly plan that pays for itself when you catch one unnecessary subscription.</p>
-      </div>
-      <div class="rounded-3xl bg-white/5 border border-white/10 p-6 flex flex-col items-start">
-        <div class="text-sm text-white/60">Founders price*</div>
-        <div class="mt-1 text-5xl font-extrabold">$6.99<span class="text-xl font-bold text-white/70">/mo</span></div>
-        <div class="mt-2 text-sm text-white/70">Cancel anytime • Email support</div>
-        <a href="#join" class="mt-5 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-900 font-bold shadow-lg shadow-emerald-500/20 hover:opacity-95">Reserve spot</a>
-        <div class="mt-3 text-xs text-white/50">*Locked for first 1,000 users</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Email capture CTA (Formspree, duplicate form) -->
-  <section id="join" class="max-w-7xl mx-auto px-6 pb-24">
-    <div class="rounded-3xl border border-white/10 p-6 md:p-10 bg-gradient-to-br from-emerald-500/10 via-cyan-500/10 to-indigo-500/10">
-      <div class="grid md:grid-cols-2 gap-8 items-center">
+    <footer>
+      <div class="grid" style="grid-template-columns:2fr 1fr; gap:16px">
         <div>
-          <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Get early access</h2>
-          <p class="mt-2 text-white/80">Be the first to try PennyPilot. We’ll email you when your invite is ready.</p>
+          <div class="label-flag">Made for the U.S. • USD pricing</div>
+          <p class="tiny">© <span id="year"></span> SubGuard. All rights reserved.</p>
         </div>
-        <form id="waitlist2" action="https://formspree.io/f/xanljgqe" method="POST" class="flex flex-col sm:flex-row gap-3" accept-charset="UTF-8">
-          <input type="email" name="email" placeholder="Work or personal email" required class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400/60 placeholder-white/50">
-          <label class="flex items-start gap-2 text-xs text-white/70"><input type="checkbox" name="consent" id="consent2" class="mt-1" required> I agree to receive early-access emails and updates.</label>
-          <button class="px-5 py-3 rounded-xl bg-white text-slate-900 font-bold hover:opacity-90">Join waitlist</button>
-        </form>
+        <div style="text-align:right">
+          <a href="#" class="tiny">Privacy</a> · <a href="#" class="tiny">Terms</a> · <a href="#waitlist" class="tiny">Join</a>
+        </div>
       </div>
-    </div>
-  </section>
+    </footer>
+  </div>
 
-  <!-- FAQ -->
-  <section id="faq" class="max-w-5xl mx-auto px-6 pb-24">
-    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-center">FAQ</h2>
-    <div class="mt-8 grid md:grid-cols-2 gap-6">
-      <details class="group rounded-2xl bg-white/5 border border-white/10 p-5">
-        <summary class="cursor-pointer font-semibold list-none flex items-center justify-between">Do I need to connect my bank?<span class="text-white/50 group-open:rotate-45 transition">+</span></summary>
-        <p class="mt-3 text-white/70 text-sm">No. The MVP works fully offline with CSV uploads you export from your bank/credit card. A secure connection option may come later.</p>
-      </details>
-      <details class="group rounded-2xl bg-white/5 border border-white/10 p-5">
-        <summary class="cursor-pointer font-semibold list-none flex items-center justify-between">What does the MVP include?<span class="text-white/50 group-open:rotate-45 transition">+</span></summary>
-        <p class="mt-3 text-white/70 text-sm">Auto‑categorization, subscription & recurring charge detection, bill/renewal email reminders, downloadable monthly report. Built within 10–15 days.</p>
-      </details>
-      <details class="group rounded-2xl bg-white/5 border border-white/10 p-5">
-        <summary class="cursor-pointer font-semibold list-none flex items-center justify-between">How will I be charged?<span class="text-white/50 group-open:rotate-45 transition">+</span></summary>
-        <p class="mt-3 text-white/70 text-sm">Monthly subscription, cancel any time. Early‑bird price locks for life for first 1,000 users.</p>
-      </details>
-      <details class="group rounded-2xl bg-white/5 border border-white/10 p-5">
-        <summary class="cursor-pointer font-semibold list-none flex items-center justify-between">Is my data private?<span class="text-white/50 group-open:rotate-45 transition">+</span></summary>
-        <p class="mt-3 text-white/70 text-sm">Yes. CSV files are processed locally in your browser for instant insights. If you opt into reminders, we only store the minimum required billing metadata.</p>
-      </details>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="border-t border-white/10">
-    <div class="max-w-7xl mx-auto px-6 py-10 text-sm text-white/60 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div>© <span id="year"></span> PennyPilot, Inc.</div>
-      <div class="flex items-center gap-6">
-        <a href="#" class="hover:text-white">Terms</a>
-        <a href="#" class="hover:text-white">Privacy</a>
-        <a href="#join" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white">Get early access</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Minimal JS: add UTM hidden inputs & inline success without redirect -->
+  <!-- Minimal JS: capture UTM/IDs, enhance form UX -->
   <script>
-    const forms = [document.getElementById('waitlist'), document.getElementById('waitlist2')].filter(Boolean);
-    const message = document.getElementById('formMessage');
-    const joinBtn = document.getElementById('joinBtn');
+    (function(){
+      // Year
+      document.getElementById('year').textContent = new Date().getFullYear();
 
-    function addHiddenInputs(form){
-      const u = new URLSearchParams(location.search);
-      const hidden = {
-        utm_source: u.get('utm_source')||'',
-        utm_medium: u.get('utm_medium')||'',
-        utm_campaign: u.get('utm_campaign')||'',
-        utm_content: u.get('utm_content')||'',
-        utm_term: u.get('utm_term')||'',
-        fbclid: u.get('fbclid')||'',
-        referrer: document.referrer||'',
-        path: location.pathname,
-        ts: new Date().toISOString(),
-        tz: Intl.DateTimeFormat().resolvedOptions().timeZone
-      };
-      Object.entries(hidden).forEach(([k,v])=>{
-        const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; form.appendChild(i);
+      // UTM + click IDs
+      const params = new URLSearchParams(window.location.search);
+      const idMap = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
+      idMap.forEach(k => {
+        const el = document.getElementById(k);
+        if (el && params.get(k)) el.value = params.get(k);
       });
-    }
 
-    function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
-
-    forms.forEach(form => {
-      addHiddenInputs(form);
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        const email = (form.querySelector('input[type="email"]')?.value||'').trim();
-        const consent = form.querySelector('input[type="checkbox"]');
-        if(!validEmail(email)) return;
-        if(consent && !consent.checked) return;
-        if(joinBtn) joinBtn.disabled = true;
-
-        // Build FormData so Formspree видит обычную форму
-        const fd = new FormData(form);
-        const res = await fetch(form.action, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' }});
-        form.reset();
-        if (message) { message.textContent = res.ok ? 'Thank you! You are on the waitlist. We will email you an invite soon.' : 'Hmm, something went wrong. Please try again later.'; message.classList.remove('hidden'); }
-        setTimeout(()=>{ if(joinBtn) joinBtn.disabled = false; }, 800);
-
-        // Optional: fbq lead
-        if (typeof fbq !== 'undefined' && res.ok) {
-          try { fbq('track', 'Lead', {content_name: 'Waitlist'}); } catch(_){}
-        }
-      });
-    });
-
-    document.getElementById('year').textContent = new Date().getFullYear();
+      // Friendly form status without blocking Formspree
+      const form = document.querySelector('form[action^="https://formspree.io"]');
+      const status = document.getElementById('form-status');
+      if (form){
+        form.addEventListener('submit', function(){
+          status.textContent = 'Submitting…';
+          setTimeout(()=>{ status.textContent = 'Thanks! If this tab stays open, you’ll see a confirmation shortly.'; }, 1200);
+        });
+      }
+    })();
   </script>
 </body>
 </html>

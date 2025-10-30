@@ -1,65 +1,448 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MakeYourSite.AI – Create Your Website in 1 Second</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: #f9fafb; color: #111827; }
-    header { text-align: center; padding: 4rem 1rem 2rem; background: linear-gradient(135deg,#4f46e5,#3b82f6); color: white; }
-    header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-    header p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; opacity: 0.9; }
+import React, { useState } from "react";
+import { Check, ChevronRight, Clock, Bell, Home, Wallet, Shield, Zap, Star, Mail } from "lucide-react";
 
-    section { text-align: center; padding: 3rem 1rem; }
-    section h2 { font-size: 1.8rem; margin-bottom: 1rem; color: #111827; }
-    section p { max-width: 600px; margin: 0 auto 2rem; color: #4b5563; }
+// --- HOW TO USE ---
+// 1) Drop this file in a Next.js app as app/page.tsx (or src/app/page.tsx) and ensure Tailwind is set up.
+// 2) Replace PIXEL_ID and subscribe() with your email provider (Beehiiv/Mailchimp/Formspree).
+// 3) Deploy to Vercel. Done.
 
-    form { background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 400px; margin: 0 auto; }
-    input[type="email"], textarea {
-      width: 100%; padding: 0.75rem 1rem; border: 1px solid #d1d5db;
-      border-radius: 0.5rem; margin-bottom: 1rem; font-size: 1rem;
-    }
-    button {
-      background: #3b82f6; color: white; border: none; padding: 0.75rem 1rem;
-      width: 100%; border-radius: 0.5rem; font-size: 1rem; font-weight: 600;
-      cursor: pointer; transition: background 0.3s;
-    }
-    button:hover { background: #2563eb; }
+// Meta Pixel (add your real pixel ID)
+const MetaPixel = () => (
+  <>
+    {/* eslint-disable @next/next/no-img-element */}
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'PIXEL_ID_REPLACE'); fbq('track', 'PageView');`,
+      }}
+    />
+    <noscript>
+      <img height="1" width="1" style={{ display: "none" }} alt=""
+        src="https://www.facebook.com/tr?id=PIXEL_ID_REPLACE&ev=PageView&noscript=1" />
+    </noscript>
+  </>
+);
 
-    footer { text-align: center; padding: 2rem 1rem; font-size: 0.9rem; color: #6b7280; }
-    @media (max-width: 768px) {
-      header h1 { font-size: 2rem; }
-      section h2 { font-size: 1.5rem; }
-    }
-  </style>
-</head>
-<body>
+export default function HomeUpLanding() {
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
+      <MetaTags />
+      <MetaPixel />
+      <Nav />
+      <Hero />
+      <Logos />
+      <ValueProps />
+      <HowItWorks />
+      <CTAStrip />
+      <SocialProof />
+      <Pricing />
+      <FAQ />
+      <Footer />
+    </main>
+  );
+}
 
-  <header>
-    <h1>MakeYourSite.AI</h1>
-    <p>Create your website in <strong>1 second</strong> – just describe what you want.</p>
-  </header>
+function MetaTags(){
+  return (
+    <>
+      <title>HomeUp – Smart Home Maintenance Planner</title>
+      <meta name="description" content="Personalized home maintenance schedules, reminders, and budget tracking. Keep your home in shape with HomeUp." />
+      <meta property="og:title" content="HomeUp – Smart Home Maintenance Planner" />
+      <meta property="og:description" content="Personalized schedules, reminders, and budgets for homeowners. Join the waitlist." />
+      <meta property="og:type" content="website" />
+      <meta property="og:image" content="/og-homeup.png" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="icon" href="/favicon.ico" />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'HomeUp',
+        url: 'https://homeup.app',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: 'https://homeup.app/?q={search_term_string}',
+          'query-input': 'required name=search_term_string'
+        }
+      })}} />
+    </>
+  );
+}
 
-  <section>
-    <h2>Get Early Access</h2>
-    <p>Describe your idea below and leave your email. Be the first to use AI that builds websites instantly.</p>
-    <form action="https://formspree.io/f/xanljgqe" method="POST">
-      <textarea name="description" placeholder="Example: I need a landing page for my yoga studio" required></textarea>
-      <input type="email" name="email" placeholder="Your email" required />
-      <button type="submit">Join the Waitlist</button>
+function Nav(){
+  return (
+    <header className="sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-slate-950/70 border-b border-white/5">
+      <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+        <a href="#top" className="flex items-center gap-2 font-semibold text-white/90">
+          <div className="h-8 w-8 rounded-2xl bg-white/10 grid place-items-center">
+            <Home className="h-5 w-5"/>
+          </div>
+          HomeUp
+        </a>
+        <nav className="hidden md:flex items-center gap-6 text-sm text-white/70">
+          <a href="#how" className="hover:text-white">How it works</a>
+          <a href="#pricing" className="hover:text-white">Pricing</a>
+          <a href="#faq" className="hover:text-white">FAQ</a>
+          <WaitlistButton />
+        </nav>
+        <div className="md:hidden"><WaitlistButton small/></div>
+      </div>
+    </header>
+  );
+}
+
+function WaitlistButton({ small = false }: { small?: boolean }){
+  return (
+    <a href="#waitlist" className={`inline-flex items-center gap-2 rounded-2xl bg-white text-slate-900 ${small ? 'px-4 py-2 text-sm' : 'px-5 py-2.5'} font-semibold shadow-lg hover:shadow-xl transition-shadow`}>
+      Join waitlist <ChevronRight className="h-4 w-4"/>
+    </a>
+  );
+}
+
+function Hero(){
+  return (
+    <section id="top" className="relative overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 h-[32rem] w-[32rem] rounded-full bg-fuchsia-500/20 blur-3xl"/>
+        <div className="absolute -bottom-40 right-1/2 translate-x-1/2 h-[28rem] w-[28rem] rounded-full bg-cyan-400/20 blur-3xl"/>
+      </div>
+      <div className="mx-auto max-w-7xl px-6 pt-16 pb-12 md:pt-24 md:pb-20 grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
+            <Zap className="h-3.5 w-3.5"/> New • Launching soon
+          </span>
+          <h1 className="mt-4 text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+            Smart home maintenance
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-300"> planned for you.</span>
+          </h1>
+          <p className="mt-4 text-white/80 text-lg md:text-xl max-w-lg">
+            HomeUp creates a personalized upkeep plan for your home—tasks, reminders, budgets, and vetted pros—so you never miss what matters.
+          </p>
+          <ul className="mt-6 space-y-2 text-white/80">
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Seasonal checklists tailored to your home</li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> SMS/email reminders that prevent costly repairs</li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Track spends & plan next year’s budget</li>
+          </ul>
+          <div className="mt-8" id="waitlist">
+            <WaitlistForm />
+            <p className="mt-3 text-xs text-white/60">Free early access for first 1,000 homes • Cancel anytime</p>
+          </div>
+        </div>
+        <div className="relative">
+          <div className="absolute -inset-6 rounded-3xl bg-white/5 blur-xl"/>
+          <div className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 p-6 shadow-2xl">
+            <DashboardMock />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WaitlistForm(){
+  const [email, setEmail] = useState("");
+  const [zip, setZip] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function subscribe(e: React.FormEvent){
+    e.preventDefault();
+    setError(null);
+    const emailValid = /\S+@\S+\.\S+/.test(email);
+    const zipValid = /^\d{5}(-\d{4})?$/.test(zip) || zip === "";
+    if(!emailValid){ setError("Enter a valid email"); return; }
+    if(!zipValid){ setError("Enter a valid ZIP code"); return; }
+    setLoading(true);
+
+    try{
+      // TODO: Replace with your API endpoint or Formspree/Beehiiv/Mailchimp fetch.
+      // Example: await fetch('https://formspree.io/f/xxxxxxx',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(e.target as HTMLFormElement)});
+      await new Promise(res => setTimeout(res, 800));
+      setSubmitted(true);
+      // Fire Meta Pixel Lead event
+      // @ts-ignore
+      if(typeof window !== 'undefined' && window.fbq){ window.fbq('track', 'Lead'); }
+    }catch(err){
+      setError("Something went wrong. Please try again.");
+    }finally{ setLoading(false); }
+  }
+
+  if(submitted){
+    return (
+      <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-4">
+        <p className="flex items-center gap-2 text-emerald-300"><Check className="h-5 w-5"/> You’re in! We’ll email you when HomeUp opens in your area.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={subscribe} className="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <label className="col-span-1 md:col-span-2">
+        <span className="sr-only">Email</span>
+        <div className="flex items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 focus-within:ring-2 focus-within:ring-fuchsia-400/40">
+          <Mail className="h-5 w-5 text-white/60"/>
+          <input
+            name="email"
+            type="email"
+            required
+            placeholder="Enter your email"
+            className="w-full bg-transparent outline-none placeholder:text-white/50"
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
+          />
+        </div>
+      </label>
+      <label>
+        <span className="sr-only">ZIP (optional)</span>
+        <input
+          name="zip"
+          inputMode="numeric"
+          pattern="\\d{5}(-\\d{4})?"
+          placeholder="ZIP code (optional)"
+          className="w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 outline-none placeholder:text-white/50 focus:ring-2 focus:ring-cyan-300/40"
+          value={zip}
+          onChange={(e)=>setZip(e.target.value)}
+        />
+      </label>
+      <button
+        type="submit"
+        aria-label="Join waitlist"
+        className="md:col-span-3 inline-flex items-center justify-center gap-2 rounded-2xl bg-white text-slate-900 px-5 py-3 font-semibold shadow-lg hover:shadow-xl transition focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={loading}
+        data-event="Lead"
+      >
+        {loading ? 'Submitting…' : 'Get early access'} <ChevronRight className="h-4 w-4"/>
+      </button>
+      {error && <p className="text-sm text-red-300 md:col-span-3">{error}</p>}
     </form>
-  </section>
+  );
+}
 
-  <section>
-    <h2>Why People Love It</h2>
-    <p>Stop paying developers. Stop wasting weeks. Get your website instantly and start growing your business today.</p>
-  </section>
+function DashboardMock(){
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-3 gap-4">
+        <Card title="This week">
+          <div className="flex items-center gap-3"><Clock className="h-5 w-5"/> 4 tasks due</div>
+        </Card>
+        <Card title="Budget">
+          <div className="flex items-center gap-3"><Wallet className="h-5 w-5"/> $82 scheduled</div>
+        </Card>
+        <Card title="Safety">
+          <div className="flex items-center gap-3"><Shield className="h-5 w-5"/> 2 alerts</div>
+        </Card>
+      </div>
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+        <div className="flex items-center justify-between">
+          <div className="font-semibold">October plan</div>
+          <span className="text-xs text-white/60">Auto-generated</span>
+        </div>
+        <ul className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-white/80">
+          <li className="flex items-center gap-2"><Bell className="h-4 w-4"/> Replace HVAC filter</li>
+          <li className="flex items-center gap-2"><Bell className="h-4 w-4"/> Test smoke detectors</li>
+          <li className="flex items-center gap-2"><Bell className="h-4 w-4"/> Clean dryer vent</li>
+          <li className="flex items-center gap-2"><Bell className="h-4 w-4"/> Seal exterior gaps</li>
+        </ul>
+      </div>
+    </div>
+  );
+}
 
-  <footer>
-    <p>© 2025 MakeYourSite.AI – Build smarter. Build faster.</p>
-  </footer>
+function Card({title, children}:{title:string, children:React.ReactNode}){
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+      <div className="text-sm text-white/70">{title}</div>
+      <div className="mt-2 text-lg">{children}</div>
+    </div>
+  );
+}
 
-</body>
-</html>
+function Logos(){
+  return (
+    <section className="py-10 border-t border-white/5">
+      <div className="mx-auto max-w-7xl px-6">
+        <p className="text-center text-white/60 text-sm">Built by folks from:</p>
+        <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-6 opacity-70">
+          <div className="h-10 bg-white/5 rounded"></div>
+          <div className="h-10 bg-white/5 rounded"></div>
+          <div className="h-10 bg-white/5 rounded"></div>
+          <div className="h-10 bg-white/5 rounded"></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ValueProps(){
+  const items = [
+    {icon: <Clock className="h-5 w-5"/>, title: 'Never forget maintenance', desc: 'HomeUp builds a living checklist so tasks get done before they become repairs.'},
+    {icon: <Wallet className="h-5 w-5"/>, title: 'Plan your budget', desc: 'See what to expect this season and spread costs with predictable monthly planning.'},
+    {icon: <Shield className="h-5 w-5"/>, title: 'Protect what matters', desc: 'Safety alerts, warranty dates, smoke detector checks, and more—automatically scheduled.'},
+  ];
+  return (
+    <section className="py-16">
+      <div className="mx-auto max-w-7xl px-6 grid md:grid-cols-3 gap-6">
+        {items.map((it, i) => (
+          <div key={i} className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-6">
+            <div className="h-10 w-10 rounded-2xl bg-white/10 grid place-items-center">{it.icon}</div>
+            <h3 className="mt-4 text-xl font-semibold">{it.title}</h3>
+            <p className="mt-2 text-white/70">{it.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function HowItWorks(){
+  const steps = [
+    {title:'Tell us about your home', desc:'Address, home type, systems & appliances. Takes under 60 seconds.'},
+    {title:'Get your plan', desc:'We generate a seasonal schedule, budget forecast, and safety checklist.'},
+    {title:'Stay on track', desc:'Timely reminders by email/SMS and optional pro recommendations.'},
+  ];
+  return (
+    <section id="how" className="py-16 border-t border-white/5">
+      <div className="mx-auto max-w-7xl px-6">
+        <h2 className="text-2xl md:text-3xl font-bold">How it works</h2>
+        <div className="mt-8 grid md:grid-cols-3 gap-6">
+          {steps.map((s, i)=> (
+            <div key={i} className="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <div className="text-white/50 text-sm">Step {i+1}</div>
+              <div className="mt-2 text-xl font-semibold">{s.title}</div>
+              <p className="mt-2 text-white/70">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CTAStrip(){
+  return (
+    <section className="py-12">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="rounded-3xl border border-white/10 bg-gradient-to-r from-fuchsia-400/10 to-cyan-400/10 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div>
+            <div className="text-xl md:text-2xl font-semibold">Be first in line</div>
+            <p className="text-white/70">Join the waitlist for early access and locked-in founding price.</p>
+          </div>
+          <WaitlistButton />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SocialProof(){
+  const items = [
+    {name: 'Alicia P.', role:'New homeowner', text:'I didn’t realize how much I was missing until I got the checklist. Already saved me a service call.'},
+    {name: 'Marcus L.', role:'Dad of 3', text:'The reminders are perfectly timed. Our filters and detectors are finally on a schedule.'},
+    {name: 'Priya K.', role:'First-time buyer', text:'Budget view makes costs predictable. Feels like a personal home manager.'},
+  ];
+  return (
+    <section className="py-16 border-t border-white/5">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex items-center gap-2 text-amber-300">
+          {[...Array(5)].map((_,i)=>(<Star key={i} className="h-5 w-5 fill-current"/>))}
+        </div>
+        <h2 className="mt-2 text-2xl md:text-3xl font-bold">Loved by busy homeowners</h2>
+        <div className="mt-6 grid md:grid-cols-3 gap-6">
+          {items.map((t, i)=> (
+            <div key={i} className="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <p className="text-white/80">“{t.text}”</p>
+              <p className="mt-4 text-sm text-white/60">{t.name} • {t.role}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Pricing(){
+  return (
+    <section id="pricing" className="py-16 border-t border-white/5">
+      <div className="mx-auto max-w-7xl px-6">
+        <h2 className="text-2xl md:text-3xl font-bold">Simple pricing</h2>
+        <div className="mt-8 grid md:grid-cols-2 gap-6">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+            <div className="text-sm text-white/60">Founding plan</div>
+            <div className="mt-2 text-4xl font-bold">$6.99<span className="text-lg font-normal text-white/60">/mo</span></div>
+            <ul className="mt-4 space-y-2 text-white/80">
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Personalized maintenance plan</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Email & SMS reminders</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Budget & spend tracking</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Early access features</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Cancel anytime</li>
+            </ul>
+            <div className="mt-6"><WaitlistButton /></div>
+            <p className="mt-2 text-xs text-white/60">No charge today – join the waitlist.</p>
+          </div>
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/10 to-transparent p-6">
+            <div className="text-sm text-white/60">What’s included at launch</div>
+            <ul className="mt-3 space-y-2 text-white/80">
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Seasonal tasks for your climate & home type</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Critical safety checklist</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Basic budget forecast</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Export to calendar</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400"/> Concierge add‑ons (optional)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FAQ(){
+  const faqs = [
+    {q:'What exactly is HomeUp?', a:'A digital planner for home upkeep. It creates a personalized schedule of tasks with reminders and a simple budget view.'},
+    {q:'Who is it for?', a:'Homeowners, landlords, and anyone responsible for a house, townhome, or condo in the U.S.'},
+    {q:'When will I get access?', a:'We’re onboarding in waves. Join the waitlist and we’ll notify you as soon as we open in your area.'},
+    {q:'How much will it cost?', a:'Founding price is $6.99/month during early access. You won’t be charged until you activate.'},
+    {q:'How do reminders work?', a:'Pick email and/or SMS. You can pause or adjust cadence anytime.'},
+  ];
+  return (
+    <section id="faq" className="py-16 border-t border-white/5">
+      <div className="mx-auto max-w-5xl px-6">
+        <h2 className="text-2xl md:text-3xl font-bold">FAQs</h2>
+        <div className="mt-8 divide-y divide-white/10 rounded-3xl border border-white/10 bg-white/5">
+          {faqs.map((f, i)=> (
+            <details key={i} className="group open:bg-white/5 p-6">
+              <summary className="cursor-pointer list-none text-lg font-semibold flex items-center justify-between">
+                {f.q}
+                <ChevronRight className="h-5 w-5 transition-transform group-open:rotate-90"/>
+              </summary>
+              <p className="mt-2 text-white/70">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer(){
+  return (
+    <footer className="py-12 border-t border-white/5">
+      <div className="mx-auto max-w-7xl px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-2 text-white/70">
+          <div className="h-8 w-8 rounded-2xl bg-white/10 grid place-items-center">
+            <Home className="h-5 w-5"/>
+          </div>
+          <span>© {new Date().getFullYear()} HomeUp</span>
+        </div>
+        <div className="text-white/50 text-sm flex items-center gap-4">
+          <a href="#" className="hover:text-white">Privacy</a>
+          <a href="#" className="hover:text-white">Terms</a>
+          <a href="#" className="hover:text-white">Contact</a>
+        </div>
+      </div>
+    </footer>
+  );
+}

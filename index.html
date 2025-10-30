@@ -5,54 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PennyPilot – Your Personal Finance Copilot</title>
   <meta name="description" content="PennyPilot is a simple personal finance copilot that auto‑categorizes your bank CSVs, spots recurring subscriptions, and sends bill & renewal alerts. Join the waitlist." />
-  <meta property="og:title" content="PennyPilot – Your Personal Finance Copilot" />
-  <meta property="og:description" content="Upload bank CSVs, get instant insights. Detect recurring charges, subscriptions, and upcoming bills. Clear, private, and fast." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://pennypilot.app/" />
-  <meta property="og:image" content="https://pennypilot.app/og-image.jpg" />
   <link rel="icon" href="/favicon.ico" />
 
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji'],
-          }
+          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui','Segoe UI','Roboto','Helvetica Neue','Arial'] }
         }
       }
     }
   </script>
-
-  <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Facebook Pixel (replace PIXEL_ID) -->
+  <!-- Facebook Pixel (optional) -->
   <script>
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?\n    n.callMethod.apply(n,arguments):n.queue.push(arguments)};\n    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';\n    n.queue=[];t=b.createElement(e);t.async=!0;\n    t.src=v;s=b.getElementsByTagName(e)[0];\n    s.parentNode.insertBefore(t,s)}(window, document,'script',\n    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'PIXEL_ID'); // TODO: replace with your Pixel ID
-    fbq('track', 'PageView');
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    // fbq('init', 'PIXEL_ID'); // <- set your pixel id if you use Ads
+    // fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1"/></noscript>
 
   <style>
-    /* Subtle animated gradient background */
     .bg-grid { background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 24px 24px; }
-    .shine { background: linear-gradient(110deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.25) 30%, rgba(255,255,255,0) 40%); background-size: 200% 100%; animation: shine 2.2s linear infinite; }
-    @keyframes shine { 0% { background-position-x: 200%; } 100% { background-position-x: -200%; } }
   </style>
 </head>
 <body class="bg-slate-950 text-white font-sans">
-  <!-- Top notification bar -->
+  <!-- Top bar -->
   <div class="w-full bg-gradient-to-r from-emerald-500/10 via-cyan-400/10 to-indigo-500/10 border-b border-white/10 text-center text-sm py-2">
     ✨ Early‑bird founders plan: first 1,000 users lock in <span class="font-semibold">$6.99/month</span> for life.
   </div>
 
-  <!-- Header -->
+  <!-- Header / Hero -->
   <header class="relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/10 via-cyan-500/10 to-transparent"></div>
     <div class="absolute inset-0 bg-grid opacity-40"></div>
@@ -60,9 +48,7 @@
     <nav class="relative z-10 max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="h-9 w-9 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-slate-900">
-            <path d="M12 3a9 9 0 100 18 9 9 0 000-18zm1 9.5V7.75a.75.75 0 10-1.5 0v5.06l3.22 3.22a.75.75 0 101.06-1.06L13 12.5z"/>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-slate-900"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zm1 9.5V7.75a.75.75 0 10-1.5 0v5.06l3.22 3.22a.75.75 0 101.06-1.06L13 12.5z"/></svg>
         </div>
         <span class="text-xl font-extrabold tracking-tight">PennyPilot</span>
       </div>
@@ -70,22 +56,20 @@
         <a href="#how" class="hover:text-white">How it works</a>
         <a href="#for" class="hover:text-white">Who it’s for</a>
         <a href="#faq" class="hover:text-white">FAQ</a>
-        <a href="#join" class="px-4 py-2 rounded-xl bg-white text-slate-900 font-semibold hover:opacity-90">Join waitlist</a>
+        <a href="#join" class="px-4 py-2 rounded-xl bg-white text-slate-900 font-semibold hover:opacity-90">Join</a>
       </div>
     </nav>
 
-    <!-- Hero -->
     <section class="relative z-10 max-w-7xl mx-auto px-6 pb-24 pt-6 md:pt-10">
       <div class="grid md:grid-cols-2 gap-10 items-center">
         <div>
-          <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">
-            Your personal finance <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-400">copilot</span> in minutes.
-          </h1>
-          <p class="mt-5 text-lg text-white/80 max-w-xl">Upload your bank CSVs. PennyPilot instantly categorizes spending, spots recurring subscriptions, and reminds you of upcoming bills & renewals. Clear insights—no account connection required.</p>
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">Your personal finance <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-400">copilot</span> in minutes.</h1>
+          <p class="mt-5 text-lg text-white/80 max-w-xl">Upload your bank CSVs. PennyPilot instantly categorizes spending, spots recurring subscriptions, and reminds you of upcoming bills & renewals. Clear insights—no bank login required.</p>
 
-          <form id="waitlist" class="mt-6 flex flex-col sm:flex-row gap-3" novalidate>
+          <!-- WAITLIST FORM (Formspree) -->
+          <form id="waitlist" action="https://formspree.io/f/xanljgqe" method="POST" class="mt-6 flex flex-col sm:flex-row gap-3" accept-charset="UTF-8">
             <input type="email" name="email" id="email" placeholder="Enter your email" required class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400/60 placeholder-white/50">
-            <label class="flex items-start gap-2 text-xs text-white/70"><input type="checkbox" id="consent1" class="mt-1"> I agree to receive early-access emails and updates.</label>
+            <label class="flex items-start gap-2 text-xs text-white/70"><input type="checkbox" name="consent" id="consent1" class="mt-1" required> I agree to receive early-access emails and updates.</label>
             <button id="joinBtn" class="px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-900 font-bold shadow-lg shadow-emerald-500/20 hover:opacity-95">Join the waitlist</button>
           </form>
           <p id="formMessage" class="mt-3 text-sm text-white/70 hidden"></p>
@@ -221,7 +205,7 @@
     </div>
   </section>
 
-  <!-- Pricing teaser -->
+  <!-- Pricing teaser & CTA -->
   <section class="max-w-7xl mx-auto px-6 pb-20">
     <div class="grid md:grid-cols-3 gap-6">
       <div class="md:col-span-2">
@@ -238,7 +222,7 @@
     </div>
   </section>
 
-  <!-- Email capture CTA -->
+  <!-- Email capture CTA (Formspree, duplicate form) -->
   <section id="join" class="max-w-7xl mx-auto px-6 pb-24">
     <div class="rounded-3xl border border-white/10 p-6 md:p-10 bg-gradient-to-br from-emerald-500/10 via-cyan-500/10 to-indigo-500/10">
       <div class="grid md:grid-cols-2 gap-8 items-center">
@@ -246,9 +230,9 @@
           <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Get early access</h2>
           <p class="mt-2 text-white/80">Be the first to try PennyPilot. We’ll email you when your invite is ready.</p>
         </div>
-        <form id="waitlist2" class="flex flex-col sm:flex-row gap-3" novalidate>
+        <form id="waitlist2" action="https://formspree.io/f/xanljgqe" method="POST" class="flex flex-col sm:flex-row gap-3" accept-charset="UTF-8">
           <input type="email" name="email" placeholder="Work or personal email" required class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400/60 placeholder-white/50">
-          <label class="flex items-start gap-2 text-xs text-white/70"><input type="checkbox" id="consent2" class="mt-1"> I agree to receive early-access emails and updates.</label>
+          <label class="flex items-start gap-2 text-xs text-white/70"><input type="checkbox" name="consent" id="consent2" class="mt-1" required> I agree to receive early-access emails and updates.</label>
           <button class="px-5 py-3 rounded-xl bg-white text-slate-900 font-bold hover:opacity-90">Join waitlist</button>
         </form>
       </div>
@@ -290,77 +274,15 @@
     </div>
   </footer>
 
-  <!-- Minimal JS for form handling -->
+  <!-- Minimal JS: add UTM hidden inputs & inline success without redirect -->
   <script>
     const forms = [document.getElementById('waitlist'), document.getElementById('waitlist2')].filter(Boolean);
     const message = document.getElementById('formMessage');
     const joinBtn = document.getElementById('joinBtn');
 
-    function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
-
-    async function submitEmail(payload){
-      const ENDPOINT = '/api/subscribe'; // Vercel Serverless Function (see code in chat)
-      try {
-        const res = await fetch(ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
-        if(!res.ok) throw new Error('Network error');
-        if (typeof fbq !== 'undefined') fbq('track', 'Lead', {content_name: 'Waitlist'});
-        return true;
-      } catch(e){
-        return false;
-      }
-    }, body: JSON.stringify({email})});
-        if(!res.ok) throw new Error('Network error');
-        fbq && fbq('track', 'Lead', {content_name: 'Waitlist'});
-        return true;
-      } catch(e){
-        return false; // we still show a local success state to avoid dropoff; switch to true-only if you prefer strict mode
-      }
-    }
-
-    forms.forEach(form => form.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      const input = form.querySelector('input[type="email"]');
-      const consent = form.querySelector('input[type="checkbox"]');
-      const email = input.value.trim();
-      if(!validEmail(email)){
-        input.classList.add('ring-2','ring-red-400');
-        setTimeout(()=>input.classList.remove('ring-2','ring-red-400'), 1200);
-        return;
-      }
-      if(consent && !consent.checked){
-        consent.classList.add('ring-2','ring-red-400');
-        setTimeout(()=>consent.classList.remove('ring-2','ring-red-400'), 1200);
-        return;
-      }
-      if(joinBtn) joinBtn.disabled = true;
-      const payload = { email, ...getTracking() };
-      const ok = await submitEmail(payload);
-      form.reset();
-      if(message){
-        message.textContent = ok ? 'Thank you! You are on the waitlist. We will email you an invite soon.' : 'Got it! You appear to be on the list. If you don’t receive an email, please try again later.';
-        message.classList.remove('hidden');
-      }
-      setTimeout(()=>{ if(joinBtn) joinBtn.disabled = false; }, 800);
-    })){
-        input.classList.add('ring-2','ring-red-400');
-        setTimeout(()=>input.classList.remove('ring-2','ring-red-400'), 1200);
-        return;
-      }
-      if(joinBtn) joinBtn.disabled = true;
-      const ok = await submitEmail(email);
-      form.reset();
-      if(message){
-        message.textContent = ok ? 'Thank you! You are on the waitlist. We will email you an invite soon.' : 'Got it! You appear to be on the list. If you don’t receive an email, please try again later.';
-        message.classList.remove('hidden');
-      }
-      setTimeout(()=>{ if(joinBtn) joinBtn.disabled = false; }, 800);
-    }))
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    function getTracking(){
+    function addHiddenInputs(form){
       const u = new URLSearchParams(location.search);
-      return {
+      const hidden = {
         utm_source: u.get('utm_source')||'',
         utm_medium: u.get('utm_medium')||'',
         utm_campaign: u.get('utm_campaign')||'',
@@ -372,41 +294,38 @@
         ts: new Date().toISOString(),
         tz: Intl.DateTimeFormat().resolvedOptions().timeZone
       };
-    }
-  </script>
-  <!-- Formspree quick attach (appended) -->
-  <script>
-    (function(){
-      const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME'; // paste your Form ID here
-      const forms = [document.getElementById('waitlist'), document.getElementById('waitlist2')].filter(Boolean);
-      forms.forEach(f => {
-        // Native HTML submit to Formspree (works even if other JS fails)
-        f.setAttribute('action', FORMSPREE_ENDPOINT);
-        f.setAttribute('method', 'POST');
-        f.setAttribute('accept-charset', 'UTF-8');
-        // Ensure email field has a name
-        const email = f.querySelector('input[type="email"]');
-        if (email && !email.name) email.name = 'email';
-        // Add UTM tracking as hidden inputs
-        const u = new URLSearchParams(location.search);
-        const hidden = {
-          utm_source: u.get('utm_source')||'',
-          utm_medium: u.get('utm_medium')||'',
-          utm_campaign: u.get('utm_campaign')||'',
-          utm_content: u.get('utm_content')||'',
-          utm_term: u.get('utm_term')||'',
-          fbclid: u.get('fbclid')||'',
-          referrer: document.referrer||'',
-          path: location.pathname,
-          ts: new Date().toISOString(),
-          tz: Intl.DateTimeFormat().resolvedOptions().timeZone
-        };
-        Object.entries(hidden).forEach(([k,v])=>{
-          const i = document.createElement('input');
-          i.type = 'hidden'; i.name = k; i.value = v; f.appendChild(i);
-        });
+      Object.entries(hidden).forEach(([k,v])=>{
+        const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; form.appendChild(i);
       });
-    })();
+    }
+
+    function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
+
+    forms.forEach(form => {
+      addHiddenInputs(form);
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const email = (form.querySelector('input[type="email"]')?.value||'').trim();
+        const consent = form.querySelector('input[type="checkbox"]');
+        if(!validEmail(email)) return;
+        if(consent && !consent.checked) return;
+        if(joinBtn) joinBtn.disabled = true;
+
+        // Build FormData so Formspree видит обычную форму
+        const fd = new FormData(form);
+        const res = await fetch(form.action, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' }});
+        form.reset();
+        if (message) { message.textContent = res.ok ? 'Thank you! You are on the waitlist. We will email you an invite soon.' : 'Hmm, something went wrong. Please try again later.'; message.classList.remove('hidden'); }
+        setTimeout(()=>{ if(joinBtn) joinBtn.disabled = false; }, 800);
+
+        // Optional: fbq lead
+        if (typeof fbq !== 'undefined' && res.ok) {
+          try { fbq('track', 'Lead', {content_name: 'Waitlist'}); } catch(_){}
+        }
+      });
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>

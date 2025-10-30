@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PennyPilot – Your Personal Finance Copilot</title>
+  <meta name="description" content="PennyPilot is a simple personal finance copilot that auto‑categorizes your bank CSVs, spots recurring subscriptions, and sends bill & renewal alerts. Join the waitlist." />
+  <meta property="og:title" content="PennyPilot – Your Personal Finance Copilot" />
+  <meta property="og:description" content="Upload bank CSVs, get instant insights. Detect recurring charges, subscriptions, and upcoming bills. Clear, private, and fast." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pennypilot.app/" />
+  <meta property="og:image" content="https://pennypilot.app/og-image.jpg" />
+  <link rel="icon" href="/favicon.ico" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Facebook Pixel (replace PIXEL_ID) -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?\n    n.callMethod.apply(n,arguments):n.queue.push(arguments)};\n    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';\n    n.queue=[];t=b.createElement(e);t.async=!0;\n    t.src=v;s=b.getElementsByTagName(e)[0];\n    s.parentNode.insertBefore(t,s)}(window, document,'script',\n    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'PIXEL_ID'); // TODO: replace with your Pixel ID
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+
+  <style>
+    /* Subtle animated gradient background */
+    .bg-grid { background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 24px 24px; }
+    .shine { background: linear-gradient(110deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.25) 30%, rgba(255,255,255,0) 40%); background-size: 200% 100%; animation: shine 2.2s linear infinite; }
+    @keyframes shine { 0% { background-position-x: 200%; } 100% { background-position-x: -200%; } }
+  </style>
+</head>
+<body class="bg-slate-950 text-white font-sans">
+  <!-- Top notification bar -->
+  <div class="w-full bg-gradient-to-r from-emerald-500/10 via-cyan-400/10 to-indigo-500/10 border-b border-white/10 text-center text-sm py-2">
+    ✨ Early‑bird founders plan: first 1,000 users lock in <span class="font-semibold">$6.99/month</span> for life.
+  </div>
+
+  <!-- Header -->
+  <header class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/10 via-cyan-500/10 to-transparent"></div>
+    <div class="absolute inset-0 bg-grid opacity-40"></div>
+
+    <nav class="relative z-10 max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-slate-900">
+            <path d="M12 3a9 9 0 100 18 9 9 0 000-18zm1 9.5V7.75a.75.75 0 10-1.5 0v5.06l3.22 3.22a.75.75 0 101.06-1.06L13 12.5z"/>
+          </svg>
+        </div>
+        <span class="text-xl font-extrabold tracking-tight">PennyPilot</span>
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-sm text-white/80">
+        <a href="#how" class="hover:text-white">How it works</a>
+        <a href="#for" class="hover:text-white">Who it’s for</a>
+        <a href="#faq" class="hover:text-white">FAQ</a>
+        <a href="#join" class="px-4 py-2 rounded-xl bg-white text-slate-900 font-semibold hover:opacity-90">Join waitlist</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative z-10 max-w-7xl mx-auto px-6 pb-24 pt-6 md:pt-10">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">
+            Your personal finance <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-400">copilot</span> in minutes.
+          </h1>
+          <p class="mt-5 text-lg text-white/80 max-w-xl">Upload your bank CSVs. PennyPilot instantly categorizes spending, spots recurring subscriptions, and reminds you of upcoming bills & renewals. Clear insights—no account connection required.</p>
+
+          <form id="waitlist" class="mt-6 flex flex-col sm:flex-row gap-3" novalidate>
+            <input type="email" name="email" id="email" placeholder="Enter your email" required class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400/60 placeholder-white/50">
+            <label class="flex items-start gap-2 text-xs text-white/70"><input type="checkbox" id="consent1" class="mt-1"> I agree to receive early-access emails and updates.</label>
+            <button id="joinBtn" class="px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-900 font-bold shadow-lg shadow-emerald-500/20 hover:opacity-95">Join the waitlist</button>
+          </form>
+          <p id="formMessage" class="mt-3 text-sm text-white/70 hidden"></p>
+
+          <div class="mt-6 flex items-center gap-4 text-white/60 text-sm">
+            <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Private: local CSV processing</div>
+            <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-cyan-400"></span> Detects subscriptions</div>
+            <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-indigo-400"></span> Email reminders</div>
+          </div>
+        </div>
+
+        <!-- Mock dashboard card -->
+        <div class="relative">
+          <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-emerald-400/30 via-cyan-400/30 to-indigo-400/30 blur-xl opacity-60"></div>
+          <div class="relative rounded-2xl bg-white/5 border border-white/10 p-5 md:p-6 shadow-2xl backdrop-blur">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold">Spending Overview</h3>
+              <span class="text-xs text-white/60">Instant after upload</span>
+            </div>
+            <div class="grid grid-cols-3 gap-3 mt-4">
+              <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+                <div class="text-xs text-white/60">This month</div>
+                <div class="text-2xl font-extrabold mt-1">$2,134</div>
+              </div>
+              <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+                <div class="text-xs text-white/60">Subscriptions</div>
+                <div class="text-2xl font-extrabold mt-1">$86</div>
+              </div>
+              <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+                <div class="text-xs text-white/60">Upcoming bills</div>
+                <div class="text-2xl font-extrabold mt-1">$312</div>
+              </div>
+            </div>
+            <div class="mt-5 rounded-xl border border-white/10">
+              <div class="flex items-center justify-between px-4 py-2 border-b border-white/10 text-white/60 text-xs">
+                <span>Likely recurring charges</span><span>Est. monthly</span>
+              </div>
+              <div class="divide-y divide-white/10">
+                <div class="flex items-center justify-between px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center">S</div>
+                    <div>
+                      <div class="text-sm font-semibold">Spotify</div>
+                      <div class="text-xs text-white/60">Entertainment</div>
+                    </div>
+                  </div>
+                  <div class="text-sm font-bold">$10.99</div>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center">A</div>
+                    <div>
+                      <div class="text-sm font-semibold">Adobe</div>
+                      <div class="text-xs text-white/60">Work</div>
+                    </div>
+                  </div>
+                  <div class="text-sm font-bold">$22.99</div>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center">P</div>
+                    <div>
+                      <div class="text-sm font-semibold">Phone Bill</div>
+                      <div class="text-xs text-white/60">Utilities</div>
+                    </div>
+                  </div>
+                  <div class="text-sm font-bold">$49.00</div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 text-xs text-white/50">*Mock data for illustration</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <!-- Social proof / badges -->
+  <section class="max-w-7xl mx-auto px-6 -mt-10 md:-mt-16">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="rounded-xl border border-white/10 bg-white/5 p-4 text-center text-white/70">No bank login required</div>
+      <div class="rounded-xl border border-white/10 bg-white/5 p-4 text-center text-white/70">Export PDF reports</div>
+      <div class="rounded-xl border border-white/10 bg-white/5 p-4 text-center text-white/70">Email reminders</div>
+      <div class="rounded-xl border border-white/10 bg-white/5 p-4 text-center text-white/70">Private by design</div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how" class="max-w-7xl mx-auto px-6 py-20">
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="md:col-span-1">
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">How it works</h2>
+        <p class="mt-3 text-white/80">A focused flow that delivers clear value on day one.</p>
+      </div>
+      <div class="md:col-span-2 grid sm:grid-cols-3 gap-6">
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+          <div class="text-sm text-white/60">Step 1</div>
+          <h3 class="font-bold mt-1">Upload CSVs</h3>
+          <p class="text-white/70 text-sm mt-2">Export transactions from your bank or card and drop them in. No account connection needed.</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+          <div class="text-sm text-white/60">Step 2</div>
+          <h3 class="font-bold mt-1">Auto‑categorize</h3>
+          <p class="text-white/70 text-sm mt-2">Our model maps merchants & categories, flags likely subscriptions and recurring charges.</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+          <div class="text-sm text-white/60">Step 3</div>
+          <h3 class="font-bold mt-1">Get alerts</h3>
+          <p class="text-white/70 text-sm mt-2">Email reminders for upcoming bills & renewals so you never miss or overpay again.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section id="for" class="max-w-7xl mx-auto px-6 pb-20">
+    <div class="rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 md:p-10">
+      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Built for real life</h2>
+      <div class="grid md:grid-cols-3 gap-6 mt-6">
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+          <h3 class="font-bold">Busy professionals</h3>
+          <p class="text-white/70 text-sm mt-2">Keep tabs on spending, tax‑deductible items, and software subscriptions.</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+          <h3 class="font-bold">Families</h3>
+          <p class="text-white/70 text-sm mt-2">See recurring charges across accounts, plan for bills, and avoid late fees.</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+          <h3 class="font-bold">Students & creators</h3>
+          <p class="text-white/70 text-sm mt-2">Track small purchases and subscriptions that add up fast.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing teaser -->
+  <section class="max-w-7xl mx-auto px-6 pb-20">
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="md:col-span-2">
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Simple subscription</h2>
+        <p class="mt-3 text-white/80">Monthly plan that pays for itself when you catch one unnecessary subscription.</p>
+      </div>
+      <div class="rounded-3xl bg-white/5 border border-white/10 p-6 flex flex-col items-start">
+        <div class="text-sm text-white/60">Founders price*</div>
+        <div class="mt-1 text-5xl font-extrabold">$6.99<span class="text-xl font-bold text-white/70">/mo</span></div>
+        <div class="mt-2 text-sm text-white/70">Cancel anytime • Email support</div>
+        <a href="#join" class="mt-5 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-900 font-bold shadow-lg shadow-emerald-500/20 hover:opacity-95">Reserve spot</a>
+        <div class="mt-3 text-xs text-white/50">*Locked for first 1,000 users</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Email capture CTA -->
+  <section id="join" class="max-w-7xl mx-auto px-6 pb-24">
+    <div class="rounded-3xl border border-white/10 p-6 md:p-10 bg-gradient-to-br from-emerald-500/10 via-cyan-500/10 to-indigo-500/10">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Get early access</h2>
+          <p class="mt-2 text-white/80">Be the first to try PennyPilot. We’ll email you when your invite is ready.</p>
+        </div>
+        <form id="waitlist2" class="flex flex-col sm:flex-row gap-3" novalidate>
+          <input type="email" name="email" placeholder="Work or personal email" required class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400/60 placeholder-white/50">
+          <label class="flex items-start gap-2 text-xs text-white/70"><input type="checkbox" id="consent2" class="mt-1"> I agree to receive early-access emails and updates.</label>
+          <button class="px-5 py-3 rounded-xl bg-white text-slate-900 font-bold hover:opacity-90">Join waitlist</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="max-w-5xl mx-auto px-6 pb-24">
+    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-center">FAQ</h2>
+    <div class="mt-8 grid md:grid-cols-2 gap-6">
+      <details class="group rounded-2xl bg-white/5 border border-white/10 p-5">
+        <summary class="cursor-pointer font-semibold list-none flex items-center justify-between">Do I need to connect my bank?<span class="text-white/50 group-open:rotate-45 transition">+</span></summary>
+        <p class="mt-3 text-white/70 text-sm">No. The MVP works fully offline with CSV uploads you export from your bank/credit card. A secure connection option may come later.</p>
+      </details>
+      <details class="group rounded-2xl bg-white/5 border border-white/10 p-5">
+        <summary class="cursor-pointer font-semibold list-none flex items-center justify-between">What does the MVP include?<span class="text-white/50 group-open:rotate-45 transition">+</span></summary>
+        <p class="mt-3 text-white/70 text-sm">Auto‑categorization, subscription & recurring charge detection, bill/renewal email reminders, downloadable monthly report. Built within 10–15 days.</p>
+      </details>
+      <details class="group rounded-2xl bg-white/5 border border-white/10 p-5">
+        <summary class="cursor-pointer font-semibold list-none flex items-center justify-between">How will I be charged?<span class="text-white/50 group-open:rotate-45 transition">+</span></summary>
+        <p class="mt-3 text-white/70 text-sm">Monthly subscription, cancel any time. Early‑bird price locks for life for first 1,000 users.</p>
+      </details>
+      <details class="group rounded-2xl bg-white/5 border border-white/10 p-5">
+        <summary class="cursor-pointer font-semibold list-none flex items-center justify-between">Is my data private?<span class="text-white/50 group-open:rotate-45 transition">+</span></summary>
+        <p class="mt-3 text-white/70 text-sm">Yes. CSV files are processed locally in your browser for instant insights. If you opt into reminders, we only store the minimum required billing metadata.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6 py-10 text-sm text-white/60 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>© <span id="year"></span> PennyPilot, Inc.</div>
+      <div class="flex items-center gap-6">
+        <a href="#" class="hover:text-white">Terms</a>
+        <a href="#" class="hover:text-white">Privacy</a>
+        <a href="#join" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white">Get early access</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Minimal JS for form handling -->
+  <script>
+    const forms = [document.getElementById('waitlist'), document.getElementById('waitlist2')].filter(Boolean);
+    const message = document.getElementById('formMessage');
+    const joinBtn = document.getElementById('joinBtn');
+
+    function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
+
+    async function submitEmail(payload){
+      const ENDPOINT = '/api/subscribe'; // Vercel Serverless Function (see code in chat)
+      try {
+        const res = await fetch(ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+        if(!res.ok) throw new Error('Network error');
+        if (typeof fbq !== 'undefined') fbq('track', 'Lead', {content_name: 'Waitlist'});
+        return true;
+      } catch(e){
+        return false;
+      }
+    }, body: JSON.stringify({email})});
+        if(!res.ok) throw new Error('Network error');
+        fbq && fbq('track', 'Lead', {content_name: 'Waitlist'});
+        return true;
+      } catch(e){
+        return false; // we still show a local success state to avoid dropoff; switch to true-only if you prefer strict mode
+      }
+    }
+
+    forms.forEach(form => form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const input = form.querySelector('input[type="email"]');
+      const consent = form.querySelector('input[type="checkbox"]');
+      const email = input.value.trim();
+      if(!validEmail(email)){
+        input.classList.add('ring-2','ring-red-400');
+        setTimeout(()=>input.classList.remove('ring-2','ring-red-400'), 1200);
+        return;
+      }
+      if(consent && !consent.checked){
+        consent.classList.add('ring-2','ring-red-400');
+        setTimeout(()=>consent.classList.remove('ring-2','ring-red-400'), 1200);
+        return;
+      }
+      if(joinBtn) joinBtn.disabled = true;
+      const payload = { email, ...getTracking() };
+      const ok = await submitEmail(payload);
+      form.reset();
+      if(message){
+        message.textContent = ok ? 'Thank you! You are on the waitlist. We will email you an invite soon.' : 'Got it! You appear to be on the list. If you don’t receive an email, please try again later.';
+        message.classList.remove('hidden');
+      }
+      setTimeout(()=>{ if(joinBtn) joinBtn.disabled = false; }, 800);
+    })){
+        input.classList.add('ring-2','ring-red-400');
+        setTimeout(()=>input.classList.remove('ring-2','ring-red-400'), 1200);
+        return;
+      }
+      if(joinBtn) joinBtn.disabled = true;
+      const ok = await submitEmail(email);
+      form.reset();
+      if(message){
+        message.textContent = ok ? 'Thank you! You are on the waitlist. We will email you an invite soon.' : 'Got it! You appear to be on the list. If you don’t receive an email, please try again later.';
+        message.classList.remove('hidden');
+      }
+      setTimeout(()=>{ if(joinBtn) joinBtn.disabled = false; }, 800);
+    }))
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function getTracking(){
+      const u = new URLSearchParams(location.search);
+      return {
+        utm_source: u.get('utm_source')||'',
+        utm_medium: u.get('utm_medium')||'',
+        utm_campaign: u.get('utm_campaign')||'',
+        utm_content: u.get('utm_content')||'',
+        utm_term: u.get('utm_term')||'',
+        fbclid: u.get('fbclid')||'',
+        referrer: document.referrer||'',
+        path: location.pathname,
+        ts: new Date().toISOString(),
+        tz: Intl.DateTimeFormat().resolvedOptions().timeZone
+      };
+    }
+  </script>
+  <!-- Formspree quick attach (appended) -->
+  <script>
+    (function(){
+      const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME'; // paste your Form ID here
+      const forms = [document.getElementById('waitlist'), document.getElementById('waitlist2')].filter(Boolean);
+      forms.forEach(f => {
+        // Native HTML submit to Formspree (works even if other JS fails)
+        f.setAttribute('action', FORMSPREE_ENDPOINT);
+        f.setAttribute('method', 'POST');
+        f.setAttribute('accept-charset', 'UTF-8');
+        // Ensure email field has a name
+        const email = f.querySelector('input[type="email"]');
+        if (email && !email.name) email.name = 'email';
+        // Add UTM tracking as hidden inputs
+        const u = new URLSearchParams(location.search);
+        const hidden = {
+          utm_source: u.get('utm_source')||'',
+          utm_medium: u.get('utm_medium')||'',
+          utm_campaign: u.get('utm_campaign')||'',
+          utm_content: u.get('utm_content')||'',
+          utm_term: u.get('utm_term')||'',
+          fbclid: u.get('fbclid')||'',
+          referrer: document.referrer||'',
+          path: location.pathname,
+          ts: new Date().toISOString(),
+          tz: Intl.DateTimeFormat().resolvedOptions().timeZone
+        };
+        Object.entries(hidden).forEach(([k,v])=>{
+          const i = document.createElement('input');
+          i.type = 'hidden'; i.name = k; i.value = v; f.appendChild(i);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
